@@ -79,4 +79,22 @@ function startShopping() {
 }
 
 
+function checkInventory(itemId, purchaseAmount, callback) {
+    //check the database and see how many items are left 
+    connection.query("SELECT * FROM products WHERE ?", { "item_id": itemId }, function (error, results, fields) {
+        // error will be an Error if one occurred during the query 
+        if (error) {
+            console.log("Error: " + error);
+            return;
+        };
+        // results will contain the results of the query 
+        var quantityAvailable = results[0].stock_quantity;
+        var price = results[0].price;
+        //see if quantity is available 
+        var result = (quantityAvailable >= purchaseAmount);
+        //run the callback and pass it the result 
+        callback(result);
+    });
+};
+
 
