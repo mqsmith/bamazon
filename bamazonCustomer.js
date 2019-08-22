@@ -98,3 +98,33 @@ function checkInventory(itemId, purchaseAmount, callback) {
 };
 
 
+function updateInventory(itemId, purchaseQuantity) {
+    //check the database for the item by Id
+    connection.query("SELECT * FROM products WHERE ?", { "item_id": itemId }, function (error, results, fields) {
+        // error will be an Error if one occurred during the query 
+        if (error) {
+            console.log("Error: " + error);
+            return;
+        };
+        // get the information from the result necessary to make the update 
+        var currentInventory = parseInt(results[0].stock_quantity);
+        var newInventory = currentInventory - purchaseQuantity;
+        var price = results[0].price;
+        //update the inventory by Id
+        connection.query("UPDATE products SET ? WHERE ?", [{ "stock_quantity": newInventory }, { "item_id": itemId }], function (error, response) {
+            if (error) {
+                throw error;
+            };
+            //display a thank you note and the customer's total price 
+            console.log("Thank you for your purchase! We have updated our inventory");
+            var totalCost = purchaseQuantity * price;
+            console.log("Your total purchase price is $" + totalCost);
+            // once transaction is complete this starts the program over
+            startShopping();
+        });
+
+    });
+
+};
+
+
