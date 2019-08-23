@@ -18,3 +18,11 @@ Run the following code in your terminal to start the app. See the following scre
 node bamazonCustomer.js
 ```
 
+This is what you see when you run the above command ![alt text](assets/images/startFuntion.png "startFunction")
+
+
+Once you answer the question with an id, you then are asekd to provide at qty you would like to purchase ![alt text](assets/images/inquier.png "Inquierer Prompt")
+
+If you entered a vaild qty then the app will process your purcahse, tell you your total and then restart the app. ![alt text](assets/images/recivedOrder.png "Process Order")
+
+If you input a qty that is larger than the qty on hand the app will tell you that there is insufficient qty and restart the app ![alt text](assets/images/insuffcientInventory.png "Insuficcient Inventory")
